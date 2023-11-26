@@ -1,9 +1,18 @@
-import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+   Text,
+   View,
+   StyleSheet,
+   Image,
+   TouchableOpacity,
+   Alert,
+} from "react-native";
 import InputTextCustom from "../components/InputTextCustom";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import InputPasswordCustom from "../components/InputPasswordCustom";
 import { Link } from "expo-router";
+import { UsuarioService } from "../services/usuario.service";
+import { LogeoUsuario } from "../interfaces/usuario.interface";
 
 export default function LoginScreen() {
    const [usuario, setUsuario] = useState<string>("");
@@ -11,6 +20,28 @@ export default function LoginScreen() {
       useState<boolean>(true);
    const [contrasenia, setContrasenia] = useState<string>("");
 
+   const funIniciarSesion = async () => {
+      if (!usuario) {
+         Alert.alert("Ingrese usuario");
+         return;
+      }
+      if (!contrasenia) {
+         Alert.alert("Ingrese una contraseña");
+         return;
+      }
+
+      const srvUsuario = new UsuarioService();
+      await srvUsuario
+         .logearse(usuario, contrasenia)
+         .then((resp: LogeoUsuario) => {
+            console.log(resp);
+
+            Alert.alert("Hola Bienvenido...");
+         })
+         .catch((error: Error) => {
+            Alert.alert(error.message);
+         });
+   };
    return (
       <View style={{ flex: 1 }}>
          <LinearGradient
@@ -45,7 +76,7 @@ export default function LoginScreen() {
             />
 
             <Text style={styles.olvido}>Has olvidado tu contraseña?</Text>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={funIniciarSesion}>
                <Text style={styles.buttonText}>Iniciar Sesión</Text>
             </TouchableOpacity>
             <View style={styles.footer}>
