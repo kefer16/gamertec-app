@@ -7,6 +7,7 @@ import {
    StyleProp,
    ViewStyle,
    KeyboardTypeOptions,
+   TextStyle,
 } from "react-native";
 interface Props {
    title: string;
@@ -14,7 +15,8 @@ interface Props {
    value: string;
    keyboardType: KeyboardTypeOptions;
    functionChangeText: Dispatch<SetStateAction<string>>;
-   style?: StyleProp<ViewStyle>;
+   styleContainer?: StyleProp<ViewStyle>;
+   styleInput?: StyleProp<TextStyle>;
    maxLength?: number;
 }
 export default function InputTextCustom({
@@ -22,15 +24,16 @@ export default function InputTextCustom({
    placeholder,
    value,
    functionChangeText,
-   style,
+   styleContainer,
+   styleInput,
    keyboardType,
    maxLength,
 }: Props) {
    return (
-      <View style={[styles.Container, style]}>
+      <View style={[styles.Container, styleContainer]}>
          <Text style={styles.TextLabel}>{title}</Text>
          <TextInput
-            style={styles.TextInput}
+            style={[styles.TextInput, styleInput]}
             value={value}
             placeholder={placeholder}
             onChangeText={functionChangeText}

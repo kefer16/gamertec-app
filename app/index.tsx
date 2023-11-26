@@ -13,6 +13,7 @@ import InputPasswordCustom from "../components/InputPasswordCustom";
 import { Link } from "expo-router";
 import { UsuarioService } from "../services/usuario.service";
 import { LogeoUsuario } from "../interfaces/usuario.interface";
+import { router } from "expo-router";
 
 export default function LoginScreen() {
    const [usuario, setUsuario] = useState<string>("");
@@ -34,9 +35,8 @@ export default function LoginScreen() {
       await srvUsuario
          .logearse(usuario, contrasenia)
          .then((resp: LogeoUsuario) => {
-            console.log(resp);
-
-            Alert.alert("Hola Bienvenido...");
+            Alert.alert("Mensaje", `Hola Bienvenido ${resp.usuario}`);
+            router.replace("/(home)");
          })
          .catch((error: Error) => {
             Alert.alert(error.message);
@@ -56,11 +56,12 @@ export default function LoginScreen() {
             <Text style={styles.tituloLigero}>a Gamertec</Text>
 
             <InputTextCustom
+               styleInput={{ textTransform: "lowercase" }}
                title="Usuario"
                placeholder="Ingrese usuario"
                value={usuario}
                functionChangeText={setUsuario}
-               keyboardType="default"
+               keyboardType="email-address"
                maxLength={15}
             />
 
