@@ -1,21 +1,17 @@
-import {
-   Text,
-   View,
-   StyleSheet,
-   Image,
-   TouchableOpacity,
-   Alert,
-} from "react-native";
+import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import InputTextCustom from "../components/InputTextCustom";
 import { LinearGradient } from "expo-linear-gradient";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import InputPasswordCustom from "../components/InputPasswordCustom";
 import { Link } from "expo-router";
 import { UsuarioService } from "../services/usuario.service";
 import { LogeoUsuario } from "../interfaces/usuario.interface";
 import { router } from "expo-router";
+import { GamertecSesionContext } from "../components/sesion/Sesion.component";
+import { GuadarSession } from "../utils/funciones.util";
 
 export default function LoginScreen() {
+   const { mostrarNotificacion } = useContext(GamertecSesionContext);
    const [usuario, setUsuario] = useState<string>("");
    const [esconderContrasenia, setEsconderContrasenia] =
       useState<boolean>(true);
@@ -23,11 +19,16 @@ export default function LoginScreen() {
 
    const funIniciarSesion = async () => {
       if (!usuario) {
-         Alert.alert("Ingrese usuario");
+         mostrarNotificacion({ tipo: "success", detalle: "Ingrese usuario" });
+
          return;
       }
       if (!contrasenia) {
-         Alert.alert("Ingrese una contraseña");
+         mostrarNotificacion({
+            tipo: "success",
+            detalle: "Ingrese una contraseña",
+         });
+
          return;
       }
 
@@ -35,11 +36,33 @@ export default function LoginScreen() {
       await srvUsuario
          .logearse(usuario, contrasenia)
          .then((resp: LogeoUsuario) => {
-            Alert.alert("Mensaje", `Hola Bienvenido ${resp.usuario}`);
+            mostrarNotificacion({
+               tipo: "success",
+               detalle: `Hola Bienvenido ${resp.usuario}`,
+            });
+            const resp2: LogeoUsuario = {
+               usuario_id: resp.usuario_id,
+               nombre: resp.nombre,
+               apellido: resp.apellido,
+               correo: resp.correo,
+               usuario: resp.usuario,
+               direccion: resp.direccion,
+               telefono: resp.telefono,
+               cls_privilegio: {
+                  privilegio_id: resp.cls_privilegio.privilegio_id,
+                  abreviatura: resp.cls_privilegio.abreviatura,
+                  tipo: resp.cls_privilegio.tipo,
+               },
+            };
+            console.log(resp2);
+
+            GuadarSession(resp2);
             router.replace("/(home)");
          })
          .catch((error: Error) => {
-            Alert.alert(error.message);
+            console.log(error);
+
+            mostrarNotificacion({ tipo: "error", detalle: error.message });
          });
    };
    return (

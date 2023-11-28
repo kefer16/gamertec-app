@@ -8,6 +8,7 @@ import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
+import { SesionProvider } from "../components/sesion/Sesion.component";
 
 export {
    // Catch any errors thrown by the Layout component.
@@ -57,12 +58,16 @@ function RootLayoutNav() {
    const colorScheme = useColorScheme();
 
    return (
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-         <Stack initialRouteName="index">
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="registro" options={{ headerShown: false }} />
-            <Stack.Screen name="(home)" options={{ headerShown: false }} />
-         </Stack>
-      </ThemeProvider>
+      <SesionProvider>
+         <ThemeProvider
+            value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+         >
+            <Stack initialRouteName="index">
+               <Stack.Screen name="index" options={{ headerShown: false }} />
+               <Stack.Screen name="registro" options={{ headerShown: false }} />
+               <Stack.Screen name="(home)" options={{ headerShown: false }} />
+            </Stack>
+         </ThemeProvider>
+      </SesionProvider>
    );
 }

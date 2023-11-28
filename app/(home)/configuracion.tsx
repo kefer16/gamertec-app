@@ -3,8 +3,22 @@ import { StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import ButtonOptionCustom from "../../components/ButtonOptionCustom";
 import { router } from "expo-router";
+import { useContext, useEffect } from "react";
+import { GamertecSesionContext } from "../../components/sesion/Sesion.component";
 
 export default function Configuracion() {
+   const { obtenerSesion, sesionGamertec, cerrarSesion } = useContext(
+      GamertecSesionContext
+   );
+
+   useEffect(() => {
+      obtenerSesion();
+   }, []);
+
+   const funCerrarSesion = () => {
+      cerrarSesion();
+      router.replace("/");
+   };
    return (
       <View style={{ flex: 1 }}>
          <View style={styles.gradientContainer}>
@@ -19,7 +33,7 @@ export default function Configuracion() {
             <ButtonOptionCustom
                iconName={"person-circle"}
                textTitle="Perfil"
-               textDescription="Kefer"
+               textDescription={sesionGamertec.usuario}
             />
 
             <View
@@ -97,7 +111,7 @@ export default function Configuracion() {
                   alignItems: "center",
                   marginTop: 30,
                }}
-               onPress={() => router.replace("/")}
+               onPress={funCerrarSesion}
             >
                <Ionicons
                   style={{ marginRight: 10, fontSize: 25, color: "red" }}

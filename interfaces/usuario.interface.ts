@@ -6,10 +6,6 @@ export interface LogeoUsuario {
    apellido: string;
    correo: string;
    usuario: string;
-   dinero: number;
-   foto: string;
-   activo: boolean;
-   fk_privilegio: number;
    direccion: string;
    telefono: string;
    cls_privilegio: PrivilegioLogin;

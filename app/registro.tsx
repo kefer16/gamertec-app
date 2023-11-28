@@ -5,12 +5,16 @@ import {
    Text,
    TouchableOpacity,
    View,
+   Alert,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { LinearGradient } from "expo-linear-gradient";
 import InputTextCustom from "../components/InputTextCustom";
 import InputPasswordCustom from "../components/InputPasswordCustom";
 import { Link } from "expo-router";
+import { UsuarioService } from "../services/usuario.service";
+import { UsuarioEntity } from "../entities/usuario.entity";
+import { crearFechaISO } from "../utils/funciones.util";
 
 export default function RegistroScreen() {
    const [nombre, setNombre] = useState<string>("");
@@ -23,6 +27,78 @@ export default function RegistroScreen() {
    const [repetirContrasenia, setRepetirContrasenia] = useState<string>("");
    const [esconderRepetirContrasenia, setEsconderRepetirContrasenia] =
       useState<boolean>(true);
+
+   const funLimpiarFormulario = () => {
+      setNombre("");
+      setApellido("");
+      setCorreo("");
+      setUsuario("");
+      setContrasenia("");
+      setRepetirContrasenia("");
+   };
+   const funCrearCuenta = () => {
+      if (!nombre) {
+         Alert.alert("Ingrese un nombre");
+         return;
+      }
+      if (!apellido) {
+         Alert.alert("Ingrese un apellido");
+         return;
+      }
+      if (!correo) {
+         Alert.alert("Ingrese un correo");
+         return;
+      }
+
+      if (!usuario) {
+         Alert.alert("Ingrese un usuario");
+         return;
+      }
+
+      if (!contrasenia) {
+         Alert.alert("Ingrese una contraseña");
+         return;
+      }
+
+      if (!repetirContrasenia) {
+         Alert.alert("Repita su contraseña");
+         return;
+      }
+
+      if (contrasenia !== repetirContrasenia) {
+         Alert.alert("Las contraseñas deben ser iguales");
+         return;
+      }
+
+      const data: UsuarioEntity = new UsuarioEntity(
+         0,
+         nombre,
+         apellido,
+         correo,
+         usuario,
+         contrasenia,
+         "",
+         crearFechaISO(),
+         "",
+         "",
+         true,
+         1
+      );
+      const srvUsuario = new UsuarioService();
+
+      srvUsuario
+         .registrar(data)
+         .then(() => {
+            Alert.alert(
+               "Exito",
+               "se creó la cuenta correctamente, ahora Inicia Sesión"
+            );
+            funLimpiarFormulario();
+         })
+         .catch((error: Error) => {
+            Alert.alert("Error", error.message);
+         });
+   };
 
    return (
       <View style={{ flex: 1 }}>
@@ -88,7 +164,7 @@ export default function RegistroScreen() {
                      setEsconderRepetirContrasenia(!esconderRepetirContrasenia)
                   }
                />
-               <TouchableOpacity style={styles.button}>
+               <TouchableOpacity style={styles.button} onPress={funCrearCuenta}>
                   <Text style={styles.buttonText}>Crea cuenta</Text>
                </TouchableOpacity>
                <View style={styles.footer}>
