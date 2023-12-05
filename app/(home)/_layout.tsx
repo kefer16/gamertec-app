@@ -23,8 +23,10 @@ export default function TabLayout() {
    return (
       <Tabs
          screenOptions={{
-            tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-            tabBarInactiveTintColor: Colors[colorScheme ?? "light"].text,
+            tabBarActiveTintColor:
+               Colors[colorScheme ?? "light"].footerButtonHover,
+            tabBarInactiveTintColor:
+               Colors[colorScheme ?? "light"].footerButton,
             headerShown: false,
          }}
       >

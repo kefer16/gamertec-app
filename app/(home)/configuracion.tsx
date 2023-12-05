@@ -1,15 +1,18 @@
 import { Text, View } from "../../components/Themed";
-import { StyleSheet, Image, TouchableOpacity } from "react-native";
+import { TouchableOpacity, useColorScheme, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import ButtonOptionCustom from "../../components/ButtonOptionCustom";
 import { router } from "expo-router";
 import { useContext, useEffect } from "react";
 import { GamertecSesionContext } from "../../components/sesion/Sesion.component";
+import Colors from "../../constants/Colors";
 
 export default function Configuracion() {
    const { obtenerSesion, sesionGamertec, cerrarSesion } = useContext(
       GamertecSesionContext
    );
+
+   const colorScheme = useColorScheme();
 
    useEffect(() => {
       obtenerSesion();
@@ -21,56 +24,58 @@ export default function Configuracion() {
    };
    return (
       <View style={{ flex: 1 }}>
-         <View style={styles.gradientContainer}>
+         <View
+            style={{
+               // height: 120,
+               paddingHorizontal: 20,
+               paddingTop: 40,
+               paddingBottom: 15,
+               backgroundColor: Colors[colorScheme ?? "light"].containerHeader,
+               borderBottomEndRadius: 20,
+               borderBottomStartRadius: 20,
+            }}
+         >
             <Image
-               style={styles.logo}
+               style={{ width: 25, height: 25, alignSelf: "flex-start" }}
                source={require("../../assets/images/image/favicon-gamertec.png")}
             />
-            <Text style={styles.title}>Configuración</Text>
+            <Text
+               style={{
+                  marginTop: 10,
+                  fontSize: 20,
+                  color: "#fff",
+                  lineHeight: 24,
+                  fontFamily: "Poppins600",
+                  // backgroundColor: "red",
+               }}
+            >
+               Configuración
+            </Text>
          </View>
 
-         <View style={{ paddingHorizontal: 20, paddingTop: 20 }}>
+         <View style={{ padding: 15, paddingVertical: 20, gap: 7 }}>
             <ButtonOptionCustom
                iconName={"person-circle"}
                textTitle="Perfil"
                textDescription={sesionGamertec.usuario}
             />
 
-            <View
-               style={styles.separator}
-               lightColor="#eee"
-               darkColor="rgba(255,255,255,0.1)"
-            />
             <ButtonOptionCustom
                iconName={"lock-closed"}
                textTitle="Contraseña"
                textDescription="Cambiar Contraseña"
             />
 
-            <View
-               style={styles.separator}
-               lightColor="#eee"
-               darkColor="rgba(255,255,255,0.1)"
-            />
             <ButtonOptionCustom
                iconName={"cart"}
                textTitle="Carrito"
                textDescription="Gestionar carrito de compras"
             />
-            <View
-               style={styles.separator}
-               lightColor="#eee"
-               darkColor="rgba(255,255,255,0.1)"
-            />
+
             <ButtonOptionCustom
                iconName={"wallet"}
                textTitle="Compras"
                textDescription="Gestionar compras"
-            />
-            <View
-               style={styles.separator}
-               lightColor="#eee"
-               darkColor="rgba(255,255,255,0.1)"
             />
 
             <ButtonOptionCustom
@@ -78,38 +83,27 @@ export default function Configuracion() {
                textTitle="Notificaciones"
                textDescription="Gestionar Notificaciones"
             />
-            <View
-               style={styles.separator}
-               lightColor="#eee"
-               darkColor="rgba(255,255,255,0.1)"
-            />
+
             <ButtonOptionCustom
                iconName={"contrast"}
                textTitle="Tema"
                textDescription="Configurar Tema de la aplicación"
             />
-            <View
-               style={styles.separator}
-               lightColor="#eee"
-               darkColor="rgba(255,255,255,0.1)"
-            />
+
             <ButtonOptionCustom
                iconName={"call"}
                textTitle="Soporte al cliente"
                textDescription="Contactar con personal de ayuda"
             />
-            <View
-               style={styles.separator}
-               lightColor="#eee"
-               darkColor="rgba(255,255,255,0.1)"
-            />
+
             <TouchableOpacity
                style={{
                   paddingVertical: 15,
+                  paddingHorizontal: 10,
                   display: "flex",
                   flexDirection: "row",
                   alignItems: "center",
-                  marginTop: 30,
+                  // marginTop: 20,
                }}
                onPress={funCerrarSesion}
             >
@@ -141,32 +135,3 @@ export default function Configuracion() {
       </View>
    );
 }
-
-const styles = StyleSheet.create({
-   container: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-   },
-   logo: {
-      width: 30,
-      height: 30,
-      alignSelf: "flex-start",
-   },
-   gradientContainer: {
-      height: 130,
-      paddingHorizontal: 20,
-      paddingTop: 40,
-      backgroundColor: "#33105d",
-   },
-   title: {
-      marginTop: 10,
-      fontSize: 20,
-      color: "#fff",
-      fontFamily: "Poppins600",
-   },
-   separator: {
-      height: 1,
-      width: "100%",
-   },
-});

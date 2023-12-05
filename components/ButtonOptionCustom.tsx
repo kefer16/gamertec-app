@@ -1,28 +1,47 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import {
+   Text,
+   TouchableOpacity,
+   View,
+   useColorScheme,
+   StyleProp,
+   TextStyle,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import Colors from "../constants/Colors";
 
 interface Props {
+   styleTouchable?: StyleProp<TextStyle>;
    iconName?: any;
    textTitle: string;
    textDescription: string;
 }
 export default function ButtonOptionCustom({
+   styleTouchable,
    iconName,
    textTitle,
    textDescription,
 }: Props) {
+   const colorScheme = useColorScheme();
    return (
       <TouchableOpacity
-         style={{
-            paddingVertical: 15,
-            paddingHorizontal: 3,
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-         }}
+         style={[
+            styleTouchable,
+            {
+               padding: 15,
+               paddingHorizontal: 10,
+               display: "flex",
+               flexDirection: "row",
+               alignItems: "center",
+               backgroundColor: Colors[colorScheme ?? "light"].card,
+               borderRadius: 10,
+            },
+         ]}
       >
          <Ionicons
-            style={{ marginRight: 10, color: "#33105d" }}
+            style={{
+               marginRight: 10,
+               color: Colors[colorScheme ?? "light"].iconPrimary,
+            }}
             size={23}
             name={iconName}
          />
@@ -32,7 +51,7 @@ export default function ButtonOptionCustom({
                   fontSize: 12,
                   fontFamily: "Poppins600",
                   lineHeight: 15,
-                  color: "#000",
+                  color: Colors[colorScheme ?? "light"].textTitle,
                }}
             >
                {textTitle}
@@ -41,7 +60,7 @@ export default function ButtonOptionCustom({
                style={{
                   fontSize: 9,
                   fontFamily: "Poppins300",
-                  color: "#6f6f6f",
+                  color: Colors[colorScheme ?? "light"].textSubtitle,
                }}
             >
                {textDescription}
@@ -52,7 +71,7 @@ export default function ButtonOptionCustom({
             style={{
                marginLeft: "auto",
                fontSize: 20,
-               color: "#bbb",
+               color: Colors[colorScheme ?? "light"].iconSecondary,
             }}
             name={"arrow-forward"}
          />
