@@ -8,7 +8,7 @@ previsualización de `despliegue utilizando Expo y Emulador de Android Studio`
 
 - Pantalla Login
 
-![Imagen despliegue Principal](.\assets\images\readme\login-app.png)
+![Imagen despliegue Principal](./assets/images/readme/login-app.png)
 
 ## Generar carpeta android
 
