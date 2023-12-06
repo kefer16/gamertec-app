@@ -8,18 +8,19 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
-
 interface Props {
    styleTouchable?: StyleProp<TextStyle>;
    iconName?: any;
    textTitle: string;
    textDescription: string;
+   onPress?: () => void;
 }
 export default function ButtonOptionCustom({
    styleTouchable,
    iconName,
    textTitle,
    textDescription,
+   onPress,
 }: Props) {
    const colorScheme = useColorScheme();
    return (
@@ -28,7 +29,7 @@ export default function ButtonOptionCustom({
             styleTouchable,
             {
                padding: 15,
-               paddingHorizontal: 10,
+               // paddingHorizontal: 15,
                display: "flex",
                flexDirection: "row",
                alignItems: "center",
@@ -36,21 +37,22 @@ export default function ButtonOptionCustom({
                borderRadius: 10,
             },
          ]}
+         onPress={onPress}
       >
          <Ionicons
             style={{
                marginRight: 10,
                color: Colors[colorScheme ?? "light"].iconPrimary,
             }}
-            size={23}
+            size={25}
             name={iconName}
          />
          <View>
             <Text
                style={{
-                  fontSize: 12,
+                  fontSize: 15,
                   fontFamily: "Poppins600",
-                  lineHeight: 15,
+                  lineHeight: 20,
                   color: Colors[colorScheme ?? "light"].textTitle,
                }}
             >
@@ -58,7 +60,7 @@ export default function ButtonOptionCustom({
             </Text>
             <Text
                style={{
-                  fontSize: 9,
+                  fontSize: 11,
                   fontFamily: "Poppins300",
                   color: Colors[colorScheme ?? "light"].textSubtitle,
                }}
@@ -70,9 +72,9 @@ export default function ButtonOptionCustom({
          <Ionicons
             style={{
                marginLeft: "auto",
-               fontSize: 20,
                color: Colors[colorScheme ?? "light"].iconSecondary,
             }}
+            size={25}
             name={"arrow-forward"}
          />
       </TouchableOpacity>

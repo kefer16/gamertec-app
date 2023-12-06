@@ -3,6 +3,7 @@ const tintColorDark = "#fff";
 
 export default {
    light: {
+      container: "#F2F2F2",
       iconPrimary: "#BFA3F9",
       iconSecondary: "#DAD8D9",
       containerHeader: "#BFA3F9",
@@ -10,7 +11,7 @@ export default {
       textTitle: "#000",
       textSubtitle: "#6f6f6f",
       borderSepare: "#6f6f6f",
-      card: "#F7F3F4",
+      card: "#fff",
       background: "#fff",
       tint: tintColorLight,
       tabIconDefault: "#000",
@@ -19,6 +20,7 @@ export default {
       footerButtonHover: "#BFA3F9",
    },
    dark: {
+      container: "#020203",
       iconPrimary: "#BFA3F9",
       iconSecondary: "#6f6f6f",
       containerHeader: "#BFA3F9",
@@ -26,7 +28,7 @@ export default {
       textTitle: "#fff",
       textSubtitle: "#DAD8D9",
       borderSepare: "#6f6f6f",
-      card: "#393939",
+      card: "#0F0F10",
       background: "#232323",
       tint: tintColorDark,
       tabIconDefault: "#000",

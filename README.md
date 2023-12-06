@@ -44,3 +44,11 @@ declare module "@env" {
    export const DEBUG_MODE: boolean;
 }
 ```
+
+## Crear estrutura de componente
+
+abreviatura para crear el componente incial deacuerdo al nombre del archivo
+
+```js
+rnfe
+```
