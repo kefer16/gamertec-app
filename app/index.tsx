@@ -67,49 +67,44 @@ export default function LoginScreen() {
    };
    return (
       <View style={{ flex: 1 }}>
-         <LinearGradient
-            colors={["#C2A2F9", "#93ACF9"]}
-            style={styles.gradientContainer}
-         >
-            <Image
-               style={styles.logo}
-               source={require("../assets/images/image/favicon-gamertec.png")}
-            />
-            <Text style={styles.titulo}>Bienvenido,</Text>
-            <Text style={styles.tituloLigero}>a Gamertec</Text>
+         <Image
+            style={styles.logo}
+            source={require("../assets/images/image/favicon-gamertec.png")}
+         />
+         <Text style={styles.titulo}>Bienvenido,</Text>
+         <Text style={styles.tituloLigero}>a Gamertec</Text>
 
-            <InputTextCustom
-               styleInput={{ textTransform: "lowercase" }}
-               title="Usuario"
-               placeholder="Ingrese usuario"
-               value={usuario}
-               functionChangeText={setUsuario}
-               keyboardType="email-address"
-               maxLength={15}
-            />
+         <InputTextCustom
+            styleInput={{ textTransform: "lowercase" }}
+            title="Usuario"
+            placeholder="Ingrese usuario"
+            value={usuario}
+            functionChangeText={setUsuario}
+            keyboardType="email-address"
+            maxLength={15}
+         />
 
-            <InputPasswordCustom
-               title="Contraseña"
-               placeholder="Ingrese contraseña"
-               value={contrasenia}
-               functionChangeText={setContrasenia}
-               activePassword={esconderContrasenia}
-               functionActivePassword={() =>
-                  setEsconderContrasenia(!esconderContrasenia)
-               }
-            />
+         <InputPasswordCustom
+            title="Contraseña"
+            placeholder="Ingrese contraseña"
+            value={contrasenia}
+            functionChangeText={setContrasenia}
+            activePassword={esconderContrasenia}
+            functionActivePassword={() =>
+               setEsconderContrasenia(!esconderContrasenia)
+            }
+         />
 
-            <Text style={styles.olvido}>Has olvidado tu contraseña?</Text>
-            <TouchableOpacity style={styles.button} onPress={funIniciarSesion}>
-               <Text style={styles.buttonText}>Iniciar Sesión</Text>
-            </TouchableOpacity>
-            <View style={styles.footer}>
-               <Text style={styles.noCuenta}>Aun no tienes cuenta?</Text>
-               <Link href="/registro" style={styles.noCuentaRegistrate}>
-                  <Text>Regístrate</Text>
-               </Link>
-            </View>
-         </LinearGradient>
+         <Text style={styles.olvido}>Has olvidado tu contraseña?</Text>
+         <TouchableOpacity style={styles.button} onPress={funIniciarSesion}>
+            <Text style={styles.buttonText}>Iniciar Sesión</Text>
+         </TouchableOpacity>
+         <View style={styles.footer}>
+            <Text style={styles.noCuenta}>Aun no tienes cuenta?</Text>
+            <Link href="/registro" style={styles.noCuentaRegistrate}>
+               <Text>Regístrate</Text>
+            </Link>
+         </View>
       </View>
    );
 }

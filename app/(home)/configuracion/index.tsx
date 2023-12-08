@@ -13,9 +13,7 @@ import { GamertecSesionContext } from "../../../components/sesion/Sesion.compone
 import Colors from "../../../constants/Colors";
 
 const index = () => {
-   const { obtenerSesion, sesionGamertec, cerrarSesion } = useContext(
-      GamertecSesionContext
-   );
+   const { obtenerSesion, cerrarSesion } = useContext(GamertecSesionContext);
 
    const colorScheme = useColorScheme();
 
@@ -46,8 +44,8 @@ const index = () => {
                paddingTop: 40,
                paddingBottom: 15,
                backgroundColor: Colors[colorScheme ?? "light"].containerHeader,
-               borderBottomEndRadius: 20,
-               borderBottomStartRadius: 20,
+               borderBottomEndRadius: 30,
+               borderBottomStartRadius: 30,
             }}
          >
             <Image

@@ -3,12 +3,13 @@ import {
    View,
    Text,
    TextInput,
-   StyleSheet,
    StyleProp,
    ViewStyle,
    KeyboardTypeOptions,
    TextStyle,
+   useColorScheme,
 } from "react-native";
+import Colors from "../constants/Colors";
 interface Props {
    title: string;
    placeholder: string;
@@ -18,6 +19,7 @@ interface Props {
    styleContainer?: StyleProp<ViewStyle>;
    styleInput?: StyleProp<TextStyle>;
    maxLength?: number;
+   inputIsEditable?: boolean;
 }
 export default function InputTextCustom({
    title,
@@ -28,12 +30,54 @@ export default function InputTextCustom({
    styleInput,
    keyboardType,
    maxLength,
+   inputIsEditable,
 }: Props) {
+   const colorScheme = useColorScheme();
    return (
-      <View style={[styles.Container, styleContainer]}>
-         <Text style={styles.TextLabel}>{title}</Text>
+      <View
+         style={[
+            {
+               width: "100%",
+               paddingHorizontal: 10,
+               paddingTop: 10,
+               borderRadius: 5,
+               backgroundColor: Colors[colorScheme ?? "light"].card,
+               borderStyle: "solid",
+               borderBottomWidth: 2,
+               borderBlockColor: Colors[colorScheme ?? "light"].inputText,
+            },
+            styleContainer,
+         ]}
+      >
+         <Text
+            style={{
+               width: "100%",
+               fontSize: 10,
+               lineHeight: 12,
+               textAlign: "left",
+               color: Colors[colorScheme ?? "light"].inputTitle,
+               fontFamily: "Poppins500",
+            }}
+         >
+            {title}
+         </Text>
          <TextInput
-            style={[styles.TextInput, styleInput]}
+            editable={inputIsEditable}
+            placeholderTextColor={
+               Colors[colorScheme ?? "light"].InputTextPlaceHolder
+            }
+            style={[
+               {
+                  display: "flex",
+                  width: "100%",
+                  fontSize: 13,
+                  color: Colors[colorScheme ?? "light"].inputText,
+                  overflow: "hidden",
+                  fontFamily: "Poppins300",
+                  borderRadius: 5,
+               },
+               styleInput,
+            ]}
             value={value}
             placeholder={placeholder}
             onChangeText={functionChangeText}
@@ -43,33 +87,3 @@ export default function InputTextCustom({
       </View>
    );
 }
-
-const styles = StyleSheet.create({
-   Container: {
-      width: "100%",
-   },
-   TextLabel: {
-      width: "100%",
-      fontSize: 15,
-      lineHeight: 20,
-      textAlign: "left",
-      marginBottom: 5,
-      color: "#fff",
-      fontFamily: "Poppins500",
-   },
-   TextInput: {
-      display: "flex",
-      width: "100%",
-      paddingVertical: 10,
-      paddingHorizontal: 15,
-      borderStyle: "solid",
-      borderColor: "#fff",
-      backgroundColor: "#ffffff2d",
-      color: "#fff",
-      borderWidth: 1,
-      borderRadius: 10,
-      marginBottom: 10,
-      overflow: "hidden",
-      fontFamily: "Poppins300",
-   },
-});

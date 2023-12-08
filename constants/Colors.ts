@@ -18,6 +18,12 @@ export default {
       tabIconSelected: tintColorLight,
       footerButton: "#6f6f6f",
       footerButtonHover: "#BFA3F9",
+
+      //input
+      input: "#000",
+      inputTitle: "#6f6f6f",
+      InputTextPlaceHolder: "#6f6f6f",
+      inputText: "#000",
    },
    dark: {
       container: "#020203",
@@ -35,5 +41,10 @@ export default {
       tabIconSelected: tintColorDark,
       footerButton: "#DAD8D9",
       footerButtonHover: "#BFA3F9",
+      //input
+      input: "#fff",
+      inputTitle: "#6f6f6f",
+      InputTextPlaceHolder: "#6f6f6f",
+      inputText: "#fff",
    },
 };

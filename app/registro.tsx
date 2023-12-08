@@ -1,22 +1,24 @@
 import { useState } from "react";
 import {
-   ScrollView,
    StyleSheet,
    Text,
    TouchableOpacity,
    View,
    Alert,
+   useColorScheme,
 } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { LinearGradient } from "expo-linear-gradient";
 import InputTextCustom from "../components/InputTextCustom";
 import InputPasswordCustom from "../components/InputPasswordCustom";
 import { Link } from "expo-router";
 import { UsuarioService } from "../services/usuario.service";
 import { UsuarioEntity } from "../entities/usuario.entity";
 import { crearFechaISO } from "../utils/funciones.util";
+import ContainerCustom from "../components/ContainerCustom";
+import Colors from "../constants/Colors";
 
 export default function RegistroScreen() {
+   const colorScheme = useColorScheme();
+
    const [nombre, setNombre] = useState<string>("");
    const [apellido, setApellido] = useState<string>("");
    const [correo, setCorreo] = useState<string>("");
@@ -101,17 +103,30 @@ export default function RegistroScreen() {
    };
 
    return (
-      <View style={{ flex: 1 }}>
-         <LinearGradient
-            colors={["#C2A2F9", "#93ACF9"]}
-            style={styles.gradientContainer}
+      <ContainerCustom>
+         <View
+            style={{
+               flex: 1,
+
+               backgroundColor: Colors[colorScheme ?? "light"].containerHeader,
+               // borderBottomLeftRadius: 150,
+               // borderBottomRightRadius: 150,
+            }}
          >
-            <StatusBar style="auto" />
+            <Text style={styles.titulo}>Crea una cuenta</Text>
+            <Text style={styles.tituloLigero}>para comenzar ahora!</Text>
 
-            <ScrollView style={styles.scroll}>
-               <Text style={styles.titulo}>Crea una cuenta</Text>
-               <Text style={styles.tituloLigero}>para comenzar ahora!</Text>
-
+            <View
+               style={{
+                  flex: 1,
+                  paddingHorizontal: 20,
+                  marginHorizontal: 3,
+                  gap: 10,
+                  backgroundColor: Colors[colorScheme ?? "light"].card,
+                  borderTopLeftRadius: 20,
+                  borderTopRightRadius: 20,
+               }}
+            >
                <InputTextCustom
                   title="Nombre"
                   placeholder="Ingrese nombre"
@@ -164,6 +179,7 @@ export default function RegistroScreen() {
                      setEsconderRepetirContrasenia(!esconderRepetirContrasenia)
                   }
                />
+
                <TouchableOpacity style={styles.button} onPress={funCrearCuenta}>
                   <Text style={styles.buttonText}>Crea cuenta</Text>
                </TouchableOpacity>
@@ -173,9 +189,9 @@ export default function RegistroScreen() {
                      <Text>Inicia Sesión</Text>
                   </Link>
                </View>
-            </ScrollView>
-         </LinearGradient>
-      </View>
+            </View>
+         </View>
+      </ContainerCustom>
    );
 }
 
