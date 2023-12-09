@@ -35,13 +35,18 @@ export default function InputPasswordCustom({
          style={[
             {
                width: "100%",
-               paddingHorizontal: 10,
+               padding: 10,
                paddingTop: 10,
                borderRadius: 5,
-               backgroundColor: Colors[colorScheme ?? "light"].card,
-               borderStyle: "solid",
-               borderBottomWidth: 2,
-               borderBlockColor: Colors[colorScheme ?? "light"].inputText,
+               backgroundColor: Colors[colorScheme ?? "light"].inputContainer,
+               // borderStyle: "solid",
+               // borderBottomWidth: 2,
+               // borderBlockColor: "#00000050",
+               shadowColor: "#51006a92",
+               shadowOffset: { width: -2, height: 4 },
+               shadowOpacity: 0.2,
+               shadowRadius: 3,
+               elevation: 20,
             },
             style,
          ]}

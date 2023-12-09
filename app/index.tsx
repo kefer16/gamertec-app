@@ -1,6 +1,5 @@
-import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { Text, View, Image, useColorScheme } from "react-native";
 import InputTextCustom from "../components/InputTextCustom";
-import { LinearGradient } from "expo-linear-gradient";
 import { useState, useContext } from "react";
 import InputPasswordCustom from "../components/InputPasswordCustom";
 import { Link } from "expo-router";
@@ -8,10 +7,17 @@ import { UsuarioService } from "../services/usuario.service";
 import { LogeoUsuario } from "../interfaces/usuario.interface";
 import { router } from "expo-router";
 import { GamertecSesionContext } from "../components/sesion/Sesion.component";
-import { GuadarSession } from "../utils/funciones.util";
+import ContainerCustom from "../components/ContainerCustom";
+import Colors from "../constants/Colors";
+import ButtonCustom from "../components/ButtonCustom";
 
 export default function LoginScreen() {
-   const { mostrarNotificacion } = useContext(GamertecSesionContext);
+   const { mostrarNotificacion, guardarSesion } = useContext(
+      GamertecSesionContext
+   );
+
+   const colorScheme = useColorScheme();
+
    const [usuario, setUsuario] = useState<string>("");
    const [esconderContrasenia, setEsconderContrasenia] =
       useState<boolean>(true);
@@ -40,23 +46,8 @@ export default function LoginScreen() {
                tipo: "success",
                detalle: `Hola Bienvenido ${resp.usuario}`,
             });
-            const resp2: LogeoUsuario = {
-               usuario_id: resp.usuario_id,
-               nombre: resp.nombre,
-               apellido: resp.apellido,
-               correo: resp.correo,
-               usuario: resp.usuario,
-               direccion: resp.direccion,
-               telefono: resp.telefono,
-               cls_privilegio: {
-                  privilegio_id: resp.cls_privilegio.privilegio_id,
-                  abreviatura: resp.cls_privilegio.abreviatura,
-                  tipo: resp.cls_privilegio.tipo,
-               },
-            };
-            console.log(resp2);
 
-            GuadarSession(resp2);
+            guardarSesion(resp);
             router.replace("/(home)");
          })
          .catch((error: Error) => {
@@ -66,126 +57,118 @@ export default function LoginScreen() {
          });
    };
    return (
-      <View style={{ flex: 1 }}>
+      <ContainerCustom>
          <Image
-            style={styles.logo}
+            style={{
+               marginTop: 80,
+               width: 100,
+               height: 100,
+               marginBottom: 20,
+               marginHorizontal: "auto",
+               alignSelf: "center",
+            }}
             source={require("../assets/images/image/favicon-gamertec.png")}
          />
-         <Text style={styles.titulo}>Bienvenido,</Text>
-         <Text style={styles.tituloLigero}>a Gamertec</Text>
 
-         <InputTextCustom
-            styleInput={{ textTransform: "lowercase" }}
-            title="Usuario"
-            placeholder="Ingrese usuario"
-            value={usuario}
-            functionChangeText={setUsuario}
-            keyboardType="email-address"
-            maxLength={15}
-         />
+         <Text
+            style={{
+               fontSize: 30,
+               lineHeight: 36,
+               color: Colors[colorScheme ?? "light"].textTitle,
+               textAlign: "center",
+               fontFamily: "Poppins900",
+            }}
+         >
+            Bienvenido,
+         </Text>
+         <Text
+            style={{
+               fontSize: 20,
+               lineHeight: 22,
+               color: Colors[colorScheme ?? "light"].textSubtitle,
+               textAlign: "center",
+               fontFamily: "Poppins400",
+               marginBottom: 50,
+            }}
+         >
+            a Gamertec
+         </Text>
 
-         <InputPasswordCustom
-            title="Contraseña"
-            placeholder="Ingrese contraseña"
-            value={contrasenia}
-            functionChangeText={setContrasenia}
-            activePassword={esconderContrasenia}
-            functionActivePassword={() =>
-               setEsconderContrasenia(!esconderContrasenia)
-            }
-         />
+         <View
+            style={{
+               flex: 1,
+               flexDirection: "column",
+               paddingHorizontal: 20,
+               gap: 10,
+            }}
+         >
+            <InputTextCustom
+               styleInput={{ textTransform: "lowercase" }}
+               title="Usuario"
+               placeholder="Ingrese usuario"
+               value={usuario}
+               functionChangeText={setUsuario}
+               keyboardType="email-address"
+               maxLength={15}
+            />
 
-         <Text style={styles.olvido}>Has olvidado tu contraseña?</Text>
-         <TouchableOpacity style={styles.button} onPress={funIniciarSesion}>
-            <Text style={styles.buttonText}>Iniciar Sesión</Text>
-         </TouchableOpacity>
-         <View style={styles.footer}>
-            <Text style={styles.noCuenta}>Aun no tienes cuenta?</Text>
-            <Link href="/registro" style={styles.noCuentaRegistrate}>
-               <Text>Regístrate</Text>
-            </Link>
+            <InputPasswordCustom
+               title="Contraseña"
+               placeholder="Ingrese contraseña"
+               value={contrasenia}
+               functionChangeText={setContrasenia}
+               activePassword={esconderContrasenia}
+               functionActivePassword={() =>
+                  setEsconderContrasenia(!esconderContrasenia)
+               }
+            />
+
+            <Text
+               style={{
+                  width: "100%",
+                  textAlign: "right",
+                  color: Colors[colorScheme ?? "light"].text,
+                  fontSize: 13,
+                  fontFamily: "Poppins400",
+                  textDecorationLine: "underline",
+                  marginBottom: 10,
+               }}
+            >
+               Has olvidado tu contraseña?
+            </Text>
+            <ButtonCustom text="Iniciar Sesión" onPress={funIniciarSesion} />
+
+            <View
+               style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  marginTop: 20,
+               }}
+            >
+               <Text
+                  style={{
+                     color: Colors[colorScheme ?? "light"].text,
+                     fontSize: 13,
+                     fontFamily: "Poppins400",
+                  }}
+               >
+                  Aun no tienes cuenta?
+               </Text>
+               <Link
+                  href="/registro"
+                  style={{
+                     color: Colors[colorScheme ?? "light"].text,
+                     marginLeft: 10,
+                     fontSize: 13,
+                     fontFamily: "Poppins400",
+                     textDecorationLine: "underline",
+                  }}
+               >
+                  <Text>Regístrate</Text>
+               </Link>
+            </View>
          </View>
-      </View>
+      </ContainerCustom>
    );
 }
-
-const styles = StyleSheet.create({
-   gradientContainer: {
-      flex: 1,
-      paddingHorizontal: 40,
-      paddingTop: 100,
-   },
-   logo: {
-      width: 100,
-      height: 100,
-      marginBottom: 20,
-      marginHorizontal: "auto",
-      alignSelf: "center",
-   },
-   titulo: {
-      fontSize: 30,
-      color: "#fff",
-      textAlign: "center",
-      fontFamily: "Poppins800",
-      lineHeight: 35,
-   },
-   tituloLigero: {
-      fontSize: 30,
-      marginBottom: 20,
-      color: "#fff",
-      textAlign: "center",
-      fontFamily: "Poppins300",
-      lineHeight: 35,
-   },
-   subtitulo: {
-      width: "100%",
-      fontSize: 15,
-      lineHeight: 20,
-      textAlign: "left",
-      marginBottom: 5,
-      color: "#fff",
-      fontFamily: "Poppins500",
-   },
-   button: {
-      marginTop: 10,
-      width: "100%",
-      paddingVertical: 15,
-      borderRadius: 10,
-      marginBottom: 10,
-      backgroundColor: "#fff",
-   },
-   buttonText: {
-      textAlign: "center",
-      color: "#000",
-      fontSize: 16,
-      fontFamily: "Poppins700",
-   },
-   olvido: {
-      width: "100%",
-      textAlign: "right",
-      color: "#fff",
-      fontSize: 13,
-      fontFamily: "Poppins400",
-      textDecorationLine: "underline",
-   },
-   footer: {
-      width: "100%",
-      display: "flex",
-      flexDirection: "row",
-      color: "#fff",
-      justifyContent: "center",
-      marginTop: 20,
-   },
-   noCuenta: {
-      color: "#fff",
-      fontSize: 13,
-      fontFamily: "Poppins400",
-   },
-   noCuentaRegistrate: {
-      color: "#fff",
-      marginLeft: 10,
-      fontSize: 13,
-      fontFamily: "Poppins400",
-      textDecorationLine: "underline",
-   },
-});

@@ -9,16 +9,12 @@ import {
 } from "react-native";
 import Colors from "../../constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useContext, useEffect } from "react";
-import { GamertecSesionContext } from "../../components/sesion/Sesion.component";
+import { useEffect } from "react";
 
 export default function TabLayout() {
-   const { obtenerSesion } = useContext(GamertecSesionContext);
    const colorScheme = useColorScheme();
 
-   useEffect(() => {
-      obtenerSesion();
-   }, []);
+   useEffect(() => {}, []);
 
    return (
       <Tabs

@@ -29,12 +29,16 @@ export default function ButtonOptionCustom({
             styleTouchable,
             {
                padding: 15,
-               // paddingHorizontal: 15,
                display: "flex",
                flexDirection: "row",
                alignItems: "center",
                backgroundColor: Colors[colorScheme ?? "light"].card,
                borderRadius: 10,
+               shadowColor: "#51006a92",
+               shadowOffset: { width: -2, height: 4 },
+               shadowOpacity: 0.2,
+               shadowRadius: 3,
+               elevation: 20,
             },
          ]}
          onPress={onPress}

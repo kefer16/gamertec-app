@@ -11,6 +11,7 @@ export interface SesionGamertecContextProps {
    sesionGamertec: LogeoUsuario;
    privilegio: privilegio;
    obtenerSesion: () => void;
+   guardarSesion: (sesion: LogeoUsuario) => void;
    cerrarSesion: () => void;
    mostrarNotificacion: (prosp: NotificacionProps) => void;
 }
@@ -28,12 +29,34 @@ export const SesionProvider = ({ children }: any) => {
 
    const obtenerSesion = async () => {
       const result = await SecureStore.getItemAsync("sesion_gamertec");
+      console.log("result", result);
+
       if (result) {
          setSesionGamertec(JSON.parse(result));
          setPrivilegio(JSON.parse(result).cls_privilegio.abreviatura);
       } else {
          console.log("No se obtuvo la llave");
       }
+   };
+
+   const guardarSesion = async (sesion: LogeoUsuario) => {
+      sesion = {
+         usuario_id: sesion.usuario_id,
+         usuario: sesion.usuario,
+         correo: sesion.correo,
+         nombre: sesion.nombre,
+         apellido: sesion.apellido,
+         direccion: sesion.direccion,
+         telefono: sesion.telefono,
+         foto: "",
+         cls_privilegio: {
+            privilegio_id: sesion.cls_privilegio.privilegio_id,
+            tipo: sesion.cls_privilegio.tipo,
+            abreviatura: sesion.cls_privilegio.abreviatura,
+         },
+      };
+      await SecureStore.setItemAsync("sesion_gamertec", JSON.stringify(sesion));
+      setSesionGamertec(sesion);
    };
 
    const cerrarSesion = () => {
@@ -46,6 +69,7 @@ export const SesionProvider = ({ children }: any) => {
          apellido: "",
          direccion: "",
          telefono: "",
+         foto: "",
          cls_privilegio: {
             privilegio_id: 0,
             tipo: "",
@@ -93,6 +117,7 @@ export const SesionProvider = ({ children }: any) => {
             sesionGamertec,
             privilegio,
             obtenerSesion,
+            guardarSesion,
             cerrarSesion,
             mostrarNotificacion,
          }}

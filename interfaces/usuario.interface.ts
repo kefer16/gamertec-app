@@ -8,6 +8,7 @@ export interface LogeoUsuario {
    usuario: string;
    direccion: string;
    telefono: string;
+   foto: string;
    cls_privilegio: PrivilegioLogin;
 }
 
