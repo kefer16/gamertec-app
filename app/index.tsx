@@ -108,7 +108,7 @@ export default function LoginScreen() {
                placeholder="Ingrese usuario"
                value={usuario}
                functionChangeText={setUsuario}
-               keyboardType="email-address"
+               keyboardType="default"
                maxLength={15}
             />
 

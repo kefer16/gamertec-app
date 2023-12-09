@@ -32,18 +32,18 @@ const HeaderCustom = ({ title, urlBack, isSecondaryPage }: Props) => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  width: 25,
-                  height: 25,
+                  width: 30,
+                  height: 30,
                   borderRadius: 50,
                   backgroundColor: "#0000003f",
-                  marginRight: 10,
+                  marginRight: 20,
                }}
                onPress={() => router.replace(urlBack ?? "..")}
             >
                <Ionicons
                   style={{
-                     fontSize: 18,
-                     color: Colors[colorScheme ?? "light"].textTitle,
+                     fontSize: 20,
+                     color: "#fff",
                   }}
                   name={"arrow-back-outline"}
                />
@@ -52,7 +52,7 @@ const HeaderCustom = ({ title, urlBack, isSecondaryPage }: Props) => {
 
          <Text
             style={{
-               fontSize: 15,
+               fontSize: 20,
                color: "#fff",
                fontFamily: "Poppins700",
             }}

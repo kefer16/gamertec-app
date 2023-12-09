@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import {
    View,
    Text,
@@ -33,6 +33,13 @@ export default function InputTextCustom({
    inputIsEditable,
 }: Props) {
    const colorScheme = useColorScheme();
+   const [focus, setfocus] = useState<boolean>(false);
+   const onFocus = () => {
+      setfocus(true);
+   };
+   const onBlur = () => {
+      setfocus(false);
+   };
    return (
       <View
          style={[
@@ -41,27 +48,31 @@ export default function InputTextCustom({
                padding: 10,
                borderRadius: 5,
                backgroundColor: Colors[colorScheme ?? "light"].inputContainer,
-               // borderStyle: "solid",
-               // borderBottomWidth: 2,
-               // borderBlockColor: "#51006a92",
-               shadowColor: "#51006a92",
-               shadowOffset: { width: -2, height: 4 },
-               shadowOpacity: 0.2,
-               shadowRadius: 3,
-               elevation: 20,
+               elevation: 5,
+               animationDuration: "1s",
+               borderStyle: "solid",
+               borderWidth: 2,
+               borderColor: Colors[colorScheme ?? "light"].inputContainer,
             },
-            styleContainer,
+            focus && {
+               borderColor: "#007bff",
+            },
          ]}
       >
          <Text
-            style={{
-               width: "100%",
-               fontSize: 10,
-               lineHeight: 12,
-               textAlign: "left",
-               color: Colors[colorScheme ?? "light"].inputTitle,
-               fontFamily: "Poppins500",
-            }}
+            style={[
+               {
+                  width: "100%",
+                  fontSize: 11,
+                  lineHeight: 13,
+                  textAlign: "left",
+                  color: Colors[colorScheme ?? "light"].inputTitle,
+                  fontFamily: "Poppins500",
+               },
+               focus && {
+                  color: "#007bff",
+               },
+            ]}
          >
             {title}
          </Text>
@@ -74,21 +85,18 @@ export default function InputTextCustom({
                {
                   display: "flex",
                   width: "100%",
-                  fontSize: 13,
-                  lineHeight: 15,
+                  fontSize: 15,
+                  lineHeight: 17,
                   color: Colors[colorScheme ?? "light"].inputText,
-                  // overflow: "hidden",
                   fontFamily: "Poppins300",
-                  // borderRadius: 3,
-                  // backgroundColor: "#00000015",
-                  // borderColor: "#ffffff12",
-                  // borderBottomWidth: 0.7,
                },
                styleInput,
             ]}
             value={value}
             placeholder={placeholder}
             onChangeText={functionChangeText}
+            onFocus={onFocus}
+            onBlur={onBlur}
             keyboardType={keyboardType}
             maxLength={maxLength}
          />

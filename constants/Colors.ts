@@ -23,7 +23,7 @@ export default {
       inputContainer: "#fff",
       input: "#000",
       inputTitle: "#6f6f6f",
-      InputTextPlaceHolder: "#6f6f6f",
+      InputTextPlaceHolder: "#ABB0B6",
       inputText: "#000",
 
       //button
@@ -50,7 +50,7 @@ export default {
       inputContainer: "#282C34",
       input: "#fff",
       inputTitle: "#6f6f6f",
-      InputTextPlaceHolder: "#6f6f6f",
+      InputTextPlaceHolder: "#555555",
       inputText: "#fff",
 
       //button

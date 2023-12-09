@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import {
    View,
    Text,
@@ -6,6 +6,7 @@ import {
    StyleProp,
    ViewStyle,
    useColorScheme,
+   TouchableOpacity,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Colors from "../constants/Colors";
@@ -30,6 +31,13 @@ export default function InputPasswordCustom({
    style,
 }: Props) {
    const colorScheme = useColorScheme();
+   const [focus, setfocus] = useState<boolean>(false);
+   const onFocus = () => {
+      setfocus(true);
+   };
+   const onBlur = () => {
+      setfocus(false);
+   };
    return (
       <View
          style={[
@@ -39,27 +47,31 @@ export default function InputPasswordCustom({
                paddingTop: 10,
                borderRadius: 5,
                backgroundColor: Colors[colorScheme ?? "light"].inputContainer,
-               // borderStyle: "solid",
-               // borderBottomWidth: 2,
-               // borderBlockColor: "#00000050",
-               shadowColor: "#51006a92",
-               shadowOffset: { width: -2, height: 4 },
-               shadowOpacity: 0.2,
-               shadowRadius: 3,
-               elevation: 20,
+               elevation: 5,
+               animationDuration: "1s",
+               borderStyle: "solid",
+               borderWidth: 2,
+               borderColor: Colors[colorScheme ?? "light"].inputContainer,
             },
-            style,
+            focus && {
+               borderColor: "#007bff",
+            },
          ]}
       >
          <Text
-            style={{
-               width: "100%",
-               fontSize: 10,
-               lineHeight: 13,
-               textAlign: "left",
-               color: Colors[colorScheme ?? "light"].inputTitle,
-               fontFamily: "Poppins500",
-            }}
+            style={[
+               {
+                  width: "100%",
+                  fontSize: 11,
+                  lineHeight: 13,
+                  textAlign: "left",
+                  color: Colors[colorScheme ?? "light"].inputTitle,
+                  fontFamily: "Poppins500",
+               },
+               focus && {
+                  color: "#007bff",
+               },
+            ]}
          >
             {title}
          </Text>
@@ -71,7 +83,8 @@ export default function InputPasswordCustom({
                {
                   display: "flex",
                   width: "100%",
-                  fontSize: 13,
+                  fontSize: 15,
+                  lineHeight: 17,
                   color: Colors[colorScheme ?? "light"].inputText,
                   overflow: "hidden",
                   fontFamily: "Poppins300",
@@ -80,24 +93,32 @@ export default function InputPasswordCustom({
             value={value}
             placeholder={placeholder}
             onChangeText={functionChangeText}
+            onFocus={onFocus}
+            onBlur={onBlur}
             secureTextEntry={activePassword}
             autoComplete="off"
          />
-         <Ionicons
+         <TouchableOpacity
             style={{
                position: "absolute",
-               textAlign: "center",
-               top: 20,
+               top: 5,
                right: 10,
                zIndex: 1,
-               color: Colors[colorScheme ?? "light"].inputTitle,
-               width: 30,
-               height: 25,
+               width: 50,
+               height: 50,
+               display: "flex",
+               alignItems: "center",
+               justifyContent: "center",
+               // backgroundColor: "red",
             }}
-            name={activePassword ? "eye-outline" : "eye-off-outline"}
-            size={20}
             onPress={functionActivePassword}
-         />
+         >
+            <Ionicons
+               style={{ color: Colors[colorScheme ?? "light"].inputTitle }}
+               name={activePassword ? "eye-outline" : "eye-off-outline"}
+               size={20}
+            />
+         </TouchableOpacity>
       </View>
    );
 }
